@@ -5,7 +5,7 @@
 # to play with, you can put them in an appropriately-named Makefile.in.
 # For example, the default setup has a Makefile.in.icc and Makefile.in.gcc.
 
-PLATFORM=mac
+PLATFORM=icc
 
 include Makefile.in.$(PLATFORM)
 DRIVERS=$(addprefix matmul-,$(BUILDS))
@@ -63,13 +63,10 @@ run-local:
 	( for build in $(BUILDS) ; do ./matmul-$$build ; done )
 
 timing-%.csv: matmul-%
-	qsub job-$*
+	qsub job-$*.pbs
 
 # ---
 #  Rules for plotting
-
-timing.pdf: $(TIMINGS)
-	python plotter.py $(BUILDS)
 
 .PHONY: plot
 plot:
